@@ -204,7 +204,7 @@ def main():
                              "We recommend that you set it to 128(en) or 40(kor)."
                         )
 
-    # params for dumping target vectors ------------------------------------------------------------
+    # params for generating perturbated vector movements -------------------------------------------
     parser.add_argument("--num_samples", help="number of dropout example for generating perturbation", type=int, default=50)
 
     parser = pl.Trainer.add_argparse_args(parser)
@@ -243,10 +243,12 @@ def main():
     )
     # ------------------------------------------------------------------------------------------------------------------
 
+    # Do train !
     if args.do_train:
         model = IntentClassification(args.domain, args.text_reader, dm.num_intents)
         trainer.fit(model, dm)
 
+    # Do test and dump !
     if args.do_test_and_dump:
         model_files = glob(os.path.join(model_folder, '*.ckpt'))
         best_fn = model_files[-1]
