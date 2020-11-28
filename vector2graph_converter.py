@@ -74,7 +74,7 @@ if __name__ == '__main__':
 
     # params for converting representation -------------------------------------------------------
     parser.add_argument("--rep_type", default="graph",
-                        help="vector To ? --> graph, circular_bar, flatted_bar") # fixed to graph this version
+                        help="vector To ? --> graph, circular_bar, flatted_bar") # fixed to graph in this version
     parser.add_argument("--need_edges", action='store_true',
                         help="Do you wanna edges(links between nodes) at generating graph ?")
     parser.add_argument("--top_n", help='Select Number of Dimensions For building Representations',
