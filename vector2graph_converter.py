@@ -88,13 +88,13 @@ if __name__ == '__main__':
     # ------------------------------------------------------------------------------------------------------------------
 
     # fns --------------------------------------------------------------------------------------------------------------
-    text_data_dir = os.path.join("data", domain, "run")
+    text_data_dir = os.path.join("./", "data", domain, "run")
 
     text_reader = args.text_reader
-    v_t_dir = os.path.join("model", domain, text_reader)
+    v_t_dir = os.path.join("./", "model", domain, text_reader)
     num_samples = int(args.num_samples)
 
-    save_dir = os.path.join("images", domain, text_reader)
+    save_dir = os.path.join("./", "images", domain, text_reader)
     rep_type = args.rep_type
     need_edges = args.need_edges
     edge_flag = "with_edge" if need_edges else "wo_edge"

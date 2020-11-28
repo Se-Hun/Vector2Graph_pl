@@ -3,9 +3,11 @@ import os
 import numpy as np
 import pandas as pd
 
+import torch
 from torch.utils.data import Dataset, DataLoader
 import pytorch_lightning as pl
 
+# NLP ------------------------------------------------------------------------------------------------------------------
 class Intent_Classification_Dataset(Dataset):
     def __init__(self, df, tokenizer, intent_label_vocab, max_seq_len):
         self.tokenizer = tokenizer
@@ -66,7 +68,7 @@ class Intent_Classification_Data_Module(pl.LightningDataModule):
         self.max_seq_length = max_seq_length
         self.batch_size = batch_size
 
-        # after preparing data, we will return number of intents.
+        # number of intents for determining model's last dimension
         self.num_intents = None
 
     def prepare_data(self):
@@ -110,3 +112,52 @@ class Intent_Classification_Data_Module(pl.LightningDataModule):
 
     def test_dataloader_for_dump(self):
         return DataLoader(self.test_dataset, batch_size=1) # fixed batch_size=1
+# ----------------------------------------------------------------------------------------------------------------------
+
+
+# Vision ---------------------------------------------------------------------------------------------------------------
+import torchvision.transforms as transforms
+from torchvision.datasets import ImageFolder
+
+class Image_Intent_Classification_Data_Module(pl.LightningDataModule):
+    def __init__(self, data_dir, batch_size):
+        super().__init__()
+
+        # data preparing params
+        self.data_dir = data_dir
+        self.batch_size = batch_size
+
+        # number of intents for determining model's last dimension
+        self.num_intents = None
+
+        # transform -- to tensor
+        self.transform = transforms.Compose([
+            transforms.Resize((64, 64)),
+            transforms.ToTensor(),
+        ])
+
+    def prepare_data(self):
+        train_data_folder = os.path.join(self.data_dir, "train")
+        train_dataset = ImageFolder(train_data_folder, transform=self.transform)
+
+        valid_data_folder = os.path.join(self.data_dir, "test") # using test-set at validation
+        valid_dataset = ImageFolder(valid_data_folder, transform=self.transform)
+
+        test_data_folder = os.path.join(self.data_dir, "test")
+        test_dataset = ImageFolder(test_data_folder, transform=self.transform)
+
+        self.train_dataset = train_dataset
+        self.valid_dataset = valid_dataset
+        self.test_dataset = test_dataset
+
+        self.num_intents = len(train_dataset.classes)
+
+    def train_dataloader(self):
+        return DataLoader(self.train_dataset, batch_size=self.batch_size, shuffle=True)
+
+    def val_dataloader(self):
+        return DataLoader(self.valid_dataset, batch_size=self.batch_size)
+
+    def test_dataloader(self):
+        return DataLoader(self.test_dataset, batch_size=self.batch_size)
+# ----------------------------------------------------------------------------------------------------------------------

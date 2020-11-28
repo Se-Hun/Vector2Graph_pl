@@ -1,3 +1,4 @@
+# NLP ------------------------------------------------------------------------------------------------------------------
 from transformers import AutoTokenizer, AutoModel
 
 def get_language_type(domain):
@@ -51,3 +52,23 @@ def get_tokenizer(domain, reader_name):
             tokenizer = AutoTokenizer.from_pretrained(bert_name)
 
     return tokenizer
+# ----------------------------------------------------------------------------------------------------------------------
+
+
+# Vision ---------------------------------------------------------------------------------------------------------------
+def get_image_reader(reader_name, num_labels):
+    if reader_name == "cnn":
+        from cnn import ImageEncoder
+        image_reader = ImageEncoder(num_labels)
+
+    elif reader_name == "resnet":
+        raise NotImplementedError("Resnet is not supported in this version.")
+
+    elif reader_name == "vgg":
+        raise NotImplementedError("Vgg is not supported in this version.")
+
+    else:
+        raise KeyError(reader_name)
+
+    return image_reader
+# ----------------------------------------------------------------------------------------------------------------------
