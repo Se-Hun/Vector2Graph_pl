@@ -64,7 +64,7 @@ class ImageIntentClassification(pl.LightningModule):
         self.log("val_acc", val_acc, prog_bar=True)
         return loss
 
-    def test_step(self, batch, batch_idx, dataloader_idx):
+    def test_step(self, batch, batch_idx):
         b_img_tensor, b_labels = batch
 
         logits, _ = self(b_img_tensor, b_labels)
@@ -191,7 +191,7 @@ def main():
         model_files = glob(os.path.join(model_folder, '*.ckpt'))
         best_fn = model_files[-1]
         model = ImageIntentClassification.load_from_checkpoint(best_fn)
-        trainer.test(model)
+        trainer.test(model, test_dataloaders=[dm.test_dataloader()])
 
 if __name__ == '__main__':
     main()
