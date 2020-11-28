@@ -136,6 +136,7 @@ dmypy.json
 *.tsv
 *.vocab
 
-# For Files about CallBack, Model, Target Vector
+# For Files about CallBack, Model, Target Vector, images
 lightning_logs/
 model/
+images/
