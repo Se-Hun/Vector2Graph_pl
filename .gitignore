@@ -127,3 +127,14 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# For Pycharm
+.idea/
+
+# For Dataset
+*.json
+*.tsv
+*.vocab
+
+# For CallBack Files
+lightning_logs/
