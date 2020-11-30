@@ -22,8 +22,9 @@ def get_text_reader(domain, reader_name):
 
     else: # kor
         if reader_name == "kobert":
-            # from utils.tokenization_kobert import KoBertTokenizer
-            # tokenizer = KoBertTokenizer.from_pretrained("monologg/kobert")
+            from transformers import BertModel
+            # bert_name = "monologg/kobert"
+            # text_reader = BertModel.from_pretrained(bert_name)
             raise NotImplementedError("Kobert is not supported in this version.")
         else: # multilingual-bert
             bert_name = "bert-base-multilingual-cased"

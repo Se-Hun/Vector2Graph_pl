@@ -203,6 +203,7 @@ def main():
                              "than this will be padded. \n"
                              "We recommend that you set it to 128(en) or 40(kor)."
                         )
+    parser.add_argument("--gpu_id", help="gpu device id", default="0", type=int)
 
     # params for generating perturbated vector movements -------------------------------------------
     parser.add_argument("--num_samples", help="number of dropout example for generating perturbation", type=int, default=50)
@@ -237,7 +238,7 @@ def main():
 
     # Trainer ----------------------------------------------------------------------------------------------------------
     trainer = pl.Trainer(
-        gpus=args.gpus if platform.system() != 'Windows' else 1,  # <-- for dev. pc
+        gpus=args.gpu_id if platform.system() != 'Windows' else 1,  # <-- for dev. pc
         checkpoint_callback=checkpoint_callback,
         callbacks=[early_stop_callback]
     )

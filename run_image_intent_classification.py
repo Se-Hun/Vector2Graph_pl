@@ -126,6 +126,7 @@ def main():
 
     # experiment settings --------------------------------------------------------------------------
     parser.add_argument("--batch_size", help="batch_size", default=50)
+    parser.add_argument("--gpu_id", help="gpu device id", default="0", type=int)
 
     # params about generated vector movements ------------------------------------------------------
     parser.add_argument("--num_samples", help="number of generated perturbation's samples", type=int, default=50)
@@ -175,7 +176,7 @@ def main():
 
     # Trainer ----------------------------------------------------------------------------------------------------------
     trainer = pl.Trainer(
-        gpus=args.gpus if platform.system() != 'Windows' else 1,  # <-- for dev. pc
+        gpus=args.gpu_id if platform.system() != 'Windows' else 1,  # <-- for dev. pc
         checkpoint_callback=checkpoint_callback,
         callbacks=[early_stop_callback]
     )
