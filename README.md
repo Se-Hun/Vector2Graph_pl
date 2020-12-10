@@ -20,7 +20,7 @@
 * `python run_intent_classification.py --domain weather --do_train --text_reader bert`와 같이 의도분류 실험을 위한 기본 Text Reader를 훈련시킨다.
 
 ### Vector Movement Generator
-* `python run_intent_classification.py --domain weather --do_test_and_dump --text_reader bert --num_samples 50`와 같이 Dropout을 통한 Perturbated Vector Movement를 생성gksek.
+* `python run_intent_classification.py --domain weather --do_test_and_dump --text_reader bert --num_samples 50`와 같이 Dropout을 통한 Perturbated Vector Movement를 생성한다.
 * 이 때, num_samples는 같은 Input에 대해 Duplicate(복제)되는 수이다. 이 Sample들은 같은 입력 값을 가짐에도 Dropout에 의해 미묘하게 다른 Output Vector가 생성된다.
 
 ### Vector To Graph Converter
