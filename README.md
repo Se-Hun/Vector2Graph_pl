@@ -31,14 +31,19 @@ python 99_build_all.py --domain weather
 ### 2. [TEXT] BERT 기반의 의도분류 모델 훈련
 * 의도분류 실험을 위한 기본 Text Reader를 훈련시킵니다.
 ```bash
-python run_intent_classification.py --domain weather --do_train --text_reader bert
+python run_intent_classification.py --domain weather \
+                                    --do_train \
+                                    --text_reader bert
 ```
 
 ### 3. Vector Movement Generator
 * 드롭아웃(Dropout)을 통해 Perturbated Vector Movement를 생성합니다.
 * 이 때, `num_samples`는 드롭아웃을 통해 섭동을 일으킬 샘플 벡터의 개수를 의미합니다. 즉, `num_samples`는 같은 입력 벡터에 대해 복제(Duplicate)되는 수를 의미합니다. 이를 통해 생성된 샘플들은 같은 입력 값을 가짐에도 드롭아웃에 의해 미묘하게 그 값이 달라지게 됩니다.
 ```bash
-python run_intent_classification.py --domain weather --do_test_and_dump --text_reader bert --num_samples 50
+python run_intent_classification.py --domain weather \
+                                    --do_test_and_dump \
+                                    --text_reader bert \
+                                    --num_samples 50
 ```
 
 ### 4. Vector To Graph Converter
@@ -46,7 +51,12 @@ python run_intent_classification.py --domain weather --do_test_and_dump --text_r
 * `top_n`은 그래프를 생성하기 위한 노드(Node)의 수를 의미합니다.
 * 또한, `need_edges` 옵션을 이용하면 그래프의 엣지(Edge)가 표현되고 이용하지 않으면 엣지는 표현되지 않습니다.
 ```bash
-python vector2graph_converter.py --domain weather --text_reader bert --num_samples 50 --rep_type graph --need_edges --top_n 10
+python vector2graph_converter.py --domain weather \
+                                 --text_reader bert \
+                                 --num_samples 50 \
+                                 --rep_type graph \
+                                 --need_edges \
+                                 --top_n 10
 ```
 
 ### 5. [Image] CNN 기반의 그래프 이미지 분류 실험
@@ -54,7 +64,15 @@ python vector2graph_converter.py --domain weather --text_reader bert --num_sampl
 * 이미지 분류에 사용한 모델은 기본 CNN(Convolutional Neural Network)를 사용했습니다.
 * **이미지 분류의 결과가 텍스트를 통한 분류 결과와 성능적으로 비슷하다면 올바르게 변환되었다고 이해할 수 있습니다.**
 ```bash
-python image_intent_classification.py --domain weather --do_train --do_test --image_reader cnn --num_samples 50 --need_edges --base_text_reader bert --rep_type graph --top_n 10
+python image_intent_classification.py --domain weather \
+                                      --do_train \
+                                      --do_test \
+                                      --image_reader cnn \
+                                      --num_samples 50 \
+                                      --need_edges \
+                                      --base_text_reader bert \
+                                      --rep_type graph \
+                                      --top_n 10
 ```
 
 ## Experiment Results
